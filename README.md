@@ -113,7 +113,7 @@ OSType: linux
 
 ## 8. Docker 기본 운영 명령
 
-이미지 목록, 컨테이너 목록, 로그, 리소스 사용량을 확인했다.
+이미지 목록, 컨테이너 목록, 로그, 리소스 사용량을 확인했고, 별도 테스트 컨테이너에 대해 `docker stop`도 수행했다.
 
 전체 로그: [docker-basics.txt](docs/logs/docker-basics.txt)
 
@@ -127,6 +127,10 @@ week1-hello   Exited (0)
 Hello from Docker!
 + docker.exe stats --no-stream ubuntu-lab
 ubuntu-lab   0.00%   952KiB / 7.712GiB
++ docker.exe stop ubuntu-stop-demo
+ubuntu-stop-demo
++ docker.exe ps -a --filter name=ubuntu-stop-demo
+ubuntu-stop-demo   Exited (137)
 ```
 
 ## 9. 컨테이너 실행 실습
@@ -196,16 +200,24 @@ COPY site/ /usr/share/nginx/html/
 
 ## 12. 바인드 마운트 반영
 
-호스트의 `site/` 디렉터리를 NGINX 컨테이너에 읽기 전용으로 마운트하고, `index.html`을 수정한 뒤 컨테이너를 재생성하지 않고 응답이 바뀌는지 확인했다.
+호스트의 `practice/bind-proof/` 디렉터리를 NGINX 컨테이너에 읽기 전용으로 마운트하고, 호스트 파일 내용을 직접 바꾼 뒤 컨테이너를 재생성하지 않고 응답이 바뀌는지 확인했다.
 
 전체 로그: [bind-mount.txt](docs/logs/bind-mount.txt)
 
 ```text
-+ docker.exe run -d --name week1-bind -p 8082:80 -v '\\wsl.localhost\Ubuntu\home\tomto\projects\codyssey\E1-1\site:/usr/share/nginx/html:ro' nginx:alpine
-+ curl -s http://localhost:8082 | rg 'Bind mount status|Codyssey E1-1'
-<p id="bind-marker">Bind mount status: live update applied</p>
-+ curl -s http://localhost:8082 | rg 'Bind mount status|Codyssey E1-1'
-<p id="bind-marker">Bind mount status: second live update verified</p>
++ printf '%s\n' '<!doctype html>' '<html><body><p id="bind-marker">Bind mount status: before host edit</p></body></html>' > practice/bind-proof/index.html
++ cat practice/bind-proof/index.html
+<!doctype html>
+<html><body><p id="bind-marker">Bind mount status: before host edit</p></body></html>
++ docker.exe run -d --name week1-bind-proof -p 8083:80 -v '\\wsl.localhost\Ubuntu\home\tomto\projects\codyssey\E1-1\practice\bind-proof:/usr/share/nginx/html:ro' nginx:alpine
++ curl -s http://localhost:8083 | rg 'Bind mount status'
+<html><body><p id="bind-marker">Bind mount status: before host edit</p></body></html>
++ printf '%s\n' '<!doctype html>' '<html><body><p id="bind-marker">Bind mount status: after host edit</p></body></html>' > practice/bind-proof/index.html
++ cat practice/bind-proof/index.html
+<!doctype html>
+<html><body><p id="bind-marker">Bind mount status: after host edit</p></body></html>
++ curl -s http://localhost:8083 | rg 'Bind mount status'
+<html><body><p id="bind-marker">Bind mount status: after host edit</p></body></html>
 ```
 
 정리:
@@ -236,7 +248,7 @@ persisted-from-volume
 
 ## 14. Git 설정 및 GitHub 연동
 
-기본 브랜치를 `main`으로 설정했고, `git config --list` 결과와 GitHub CLI 인증 상태를 확인했다. 토큰과 이메일은 마스킹했다.
+기본 브랜치를 `main`으로 설정했고, `git config --list`와 `gh auth status`를 명령어 포함 로그로 기록했다. 토큰과 이메일은 마스킹했다.
 
 전체 로그:
 
@@ -249,12 +261,14 @@ VS Code 연동 스크린샷:
 ![VS Code GitHub proof](docs/screenshots/vscode-source-control-github.png)
 
 ```text
+git config --list
 user.name=NiceTry3675
 user.email=to***@hs.ac.kr
 init.defaultbranch=main
 ```
 
 ```text
+gh auth status
 Logged in to github.com account NiceTry3675
 Git operations protocol: https
 Token: gho_************************************
@@ -269,8 +283,7 @@ origin  https://github.com/NiceTry3675/E1-1.git (push)
 
 참고:
 
-- 본 저장소는 CLI 기준으로 GitHub 인증 상태를 검증했다.
-- VS Code GUI 로그인 화면 캡처가 과제 평가에서 꼭 필요하면 `docs/screenshots/`에 별도 이미지 파일을 추가해 README에서 링크하면 된다.
+- 본 저장소는 CLI 로그와 VS Code 스크린샷을 함께 남겼다.
 
 ## 15. 트러블슈팅
 

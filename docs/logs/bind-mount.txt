@@ -1,44 +1,26 @@
++ docker.exe rm -f week1-bind-proof
+week1-bind-proof
++ mkdir -p practice/bind-proof
++ printf '%s
+' '<!doctype html>' '<html><body><p id="bind-marker">Bind mount status: before host edit</p></body></html>'
++ cat practice/bind-proof/index.html
+<!doctype html>
+<html><body><p id="bind-marker">Bind mount status: before host edit</p></body></html>
 +++ pwd
-++ wslpath -w '"/home/tomto/projects/codyssey/E1-1/site"'
-+ docker.exe run -d --name week1-bind -p 8082:80 -v '\home\tomto\projects\codyssey\E1-1\site:/usr/share/nginx/html:ro' nginx:alpine
-docker: Error response from daemon: \home\tomto\projects\codyssey\E1-1\site%!(EXTRA string=is not a valid Windows path)
-
-Run 'docker run --help' for more information
+++ wslpath -w /home/tomto/projects/codyssey/E1-1/practice/bind-proof
++ win_path='\\wsl.localhost\Ubuntu\home\tomto\projects\codyssey\E1-1\practice\bind-proof'
++ docker.exe run -d --name week1-bind-proof -p 8083:80 -v '\\wsl.localhost\Ubuntu\home\tomto\projects\codyssey\E1-1\practice\bind-proof:/usr/share/nginx/html:ro' nginx:alpine
+411a8eb9243c333e2e30709347669ef0bd9e08f80de21d054e2fc9136335cd4b
 + sleep 2
-+ curl -s http://localhost:8082
-+ rg 'Bind mount status|Codyssey E1-1'
-+ docker.exe ps
-CONTAINER ID   IMAGE                   COMMAND                   CREATED          STATUS          PORTS                                     NAMES
-c69c8bed7de0   workstation-nginx:1.0   "/docker-entrypoint.…"   32 seconds ago   Up 32 seconds   0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   week1-web-8081
-c77734d34f50   workstation-nginx:1.0   "/docker-entrypoint.…"   33 seconds ago   Up 15 seconds   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   week1-web-8080
-2f8596da9ffa   ubuntu                  "bash"                    58 seconds ago   Up 58 seconds                                             ubuntu-lab
++ curl -s http://localhost:8083
++ rg 'Bind mount status'
+<html><body><p id="bind-marker">Bind mount status: before host edit</p></body></html>
++ printf '%s
+' '<!doctype html>' '<html><body><p id="bind-marker">Bind mount status: after host edit</p></body></html>'
++ cat practice/bind-proof/index.html
+<!doctype html>
+<html><body><p id="bind-marker">Bind mount status: after host edit</p></body></html>
 + sleep 1
-+ curl -s http://localhost:8082
-+ rg 'Bind mount status|Codyssey E1-1'
-+++ pwd
-++ wslpath -w /home/tomto/projects/codyssey/E1-1/site
-+ win_path='\\wsl.localhost\Ubuntu\home\tomto\projects\codyssey\E1-1\site'
-+ docker.exe run -d --name week1-bind -p 8082:80 -v '\\wsl.localhost\Ubuntu\home\tomto\projects\codyssey\E1-1\site:/usr/share/nginx/html:ro' nginx:alpine
-Unable to find image 'nginx:alpine' locally
-alpine: Pulling from library/nginx
-Digest: sha256:e7257f1ef28ba17cf7c248cb8ccf6f0c6e0228ab9c315c152f9c203cd34cf6d1
-Status: Downloaded newer image for nginx:alpine
-aeed225afa5160af962b76451e5c3148bc067773bc94633cc7e90af37ad45e56
-+ sleep 2
-+ curl -s http://localhost:8082
-+ rg 'Bind mount status|Codyssey E1-1'
-  <title>Codyssey E1-1</title>
-    <h1>Codyssey E1-1</h1>
-    <p id="bind-marker">Bind mount status: live update applied</p>
-+ docker.exe ps
-CONTAINER ID   IMAGE                   COMMAND                   CREATED              STATUS              PORTS                                     NAMES
-aeed225afa51   nginx:alpine            "/docker-entrypoint.…"   19 seconds ago       Up 2 seconds        0.0.0.0:8082->80/tcp, [::]:8082->80/tcp   week1-bind
-c69c8bed7de0   workstation-nginx:1.0   "/docker-entrypoint.…"   59 seconds ago       Up 42 seconds       0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   week1-web-8081
-c77734d34f50   workstation-nginx:1.0   "/docker-entrypoint.…"   About a minute ago   Up 25 seconds       0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   week1-web-8080
-2f8596da9ffa   ubuntu                  "bash"                    About a minute ago   Up About a minute                                             ubuntu-lab
-+ sleep 1
-+ curl -s http://localhost:8082
-+ rg 'Bind mount status|Codyssey E1-1'
-  <title>Codyssey E1-1</title>
-    <h1>Codyssey E1-1</h1>
-    <p id="bind-marker">Bind mount status: second live update verified</p>
++ curl -s http://localhost:8083
++ rg 'Bind mount status'
+<html><body><p id="bind-marker">Bind mount status: after host edit</p></body></html>

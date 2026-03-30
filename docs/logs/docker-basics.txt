@@ -208,3 +208,20 @@ CONTAINER ID   NAME         CPU %     MEM USAGE / LIMIT   MEM %     NET I/O     
 CONTAINER ID   IMAGE         COMMAND    CREATED          STATUS                     PORTS     NAMES
 2f8596da9ffa   ubuntu        "bash"     19 seconds ago   Up 2 seconds                         ubuntu-lab
 e5f76e40ab2b   hello-world   "/hello"   20 seconds ago   Exited (0) 2 seconds ago             week1-hello
++ docker.exe run -dit --name ubuntu-stop-demo ubuntu bash
+36545e50a1d0e84e404f55175b674bc059af4609c969c6c46982440b58b0ec1f
++ docker.exe ps
+CONTAINER ID   IMAGE                   COMMAND                   CREATED          STATUS                  PORTS                                     NAMES
+36545e50a1d0   ubuntu                  "bash"                    18 seconds ago   Up Less than a second                                             ubuntu-stop-demo
+643aa4492733   ubuntu                  "bash"                    33 minutes ago   Up 33 minutes                                                     week1-volume-2
+aeed225afa51   nginx:alpine            "/docker-entrypoint.…"   34 minutes ago   Up 33 minutes           0.0.0.0:8082->80/tcp, [::]:8082->80/tcp   week1-bind
+c69c8bed7de0   workstation-nginx:1.0   "/docker-entrypoint.…"   34 minutes ago   Up 34 minutes           0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   week1-web-8081
+c77734d34f50   workstation-nginx:1.0   "/docker-entrypoint.…"   34 minutes ago   Up 34 minutes           0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   week1-web-8080
+2f8596da9ffa   ubuntu                  "bash"                    35 minutes ago   Up 34 minutes                                                     ubuntu-lab
++ docker.exe stop ubuntu-stop-demo
+ubuntu-stop-demo
++ docker.exe ps -a --filter name=ubuntu-stop-demo
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS                                PORTS     NAMES
+36545e50a1d0   ubuntu    "bash"    29 seconds ago   Exited (137) Less than a second ago             ubuntu-stop-demo
++ docker.exe rm ubuntu-stop-demo
+ubuntu-stop-demo

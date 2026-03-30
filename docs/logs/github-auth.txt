@@ -1,3 +1,4 @@
++ gh auth status
 github.com
   ✓ Logged in to github.com account NiceTry3675 (/home/tomto/.config/gh/hosts.yml)
   - Active account: true
