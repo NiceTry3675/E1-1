@@ -38,7 +38,7 @@ git version 2.43.0
 - [x] `ubuntu` 컨테이너 내부 명령 실행
 - [x] `Dockerfile` 기반 커스텀 이미지 빌드
 - [x] 포트 매핑 접속 확인 (`8080`, `8081`)
-- [x] 바인드 마운트 변경 반영 확인 (`8082`)
+- [x] 바인드 마운트 변경 반영 확인 (`8083`)
 - [x] named volume 영속성 확인
 - [x] Git 사용자 정보 / 기본 브랜치 설정
 - [x] GitHub CLI 로그인 상태 확인
@@ -50,6 +50,7 @@ git version 2.43.0
 - Docker 설치 점검 / 기본 운영 / `hello-world` / `ubuntu`: [docker-basics.txt](docs/logs/docker-basics.txt)
 - Dockerfile 빌드 / 포트 매핑 / 웹 로그: [custom-image.txt](docs/logs/custom-image.txt)
 - 바인드 마운트: [bind-mount.txt](docs/logs/bind-mount.txt)
+- 바인드 마운트 경로 오류 재현: [bind-mount-invalid-path.txt](docs/logs/bind-mount-invalid-path.txt)
 - 볼륨 영속성: [volume.txt](docs/logs/volume.txt)
 - Git 설정: [git-config.txt](docs/logs/git-config.txt)
 - GitHub 인증 상태: [github-auth.txt](docs/logs/github-auth.txt)
@@ -200,7 +201,7 @@ COPY site/ /usr/share/nginx/html/
 
 ## 12. 바인드 마운트 반영
 
-호스트의 `practice/bind-proof/` 디렉터리를 NGINX 컨테이너에 읽기 전용으로 마운트하고, 호스트 파일 내용을 직접 바꾼 뒤 컨테이너를 재생성하지 않고 응답이 바뀌는지 확인했다.
+호스트의 `practice/bind-proof/` 디렉터리를 NGINX 컨테이너에 읽기 전용으로 마운트하고, `8083` 포트에서 호스트 파일 내용을 직접 바꾼 뒤 컨테이너를 재생성하지 않고 응답이 바뀌는지 확인했다.
 
 전체 로그: [bind-mount.txt](docs/logs/bind-mount.txt)
 
@@ -298,8 +299,8 @@ origin  https://github.com/NiceTry3675/E1-1.git (push)
 
 - 문제: 첫 바인드 마운트 시 `is not a valid Windows path` 오류가 발생했다.
 - 원인 가설: `wslpath -w`로 만든 경로를 감싸는 quoting이 잘못되어 경로 앞뒤에 불필요한 문자가 붙었다.
-- 확인: [bind-mount.txt](docs/logs/bind-mount.txt) 첫 부분에 깨진 경로와 오류 메시지가 기록됐다.
-- 해결: `wslpath -w "$(pwd)/site"` 형식으로 경로를 다시 만들고 `\\wsl.localhost\Ubuntu\...` 형식으로 전달해 성공했다.
+- 확인: [bind-mount-invalid-path.txt](docs/logs/bind-mount-invalid-path.txt)에 잘못된 경로와 오류 메시지를 따로 기록했다.
+- 해결: `wslpath -w "$(pwd)/practice/bind-proof"` 형식으로 경로를 다시 만들고 `\\wsl.localhost\Ubuntu\...` 형식으로 전달해 성공했다.
 
 ### 3) Git 기본 브랜치가 명시돼 있지 않음
 

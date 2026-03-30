@@ -1,0 +1,6 @@
+++ wslpath -w '"$(pwd)/site"'
++ bad_path='$(pwd)\site'
++ docker.exe run --rm -v '$(pwd)\site:/usr/share/nginx/html:ro' nginx:alpine true
+docker: Error response from daemon: $(pwd)\site%!(EXTRA string=is not a valid Windows path)
+
+Run 'docker run --help' for more information
