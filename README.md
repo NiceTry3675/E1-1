@@ -179,6 +179,8 @@ COPY site/ /usr/share/nginx/html/
 
 전체 로그: [custom-image.txt](docs/logs/custom-image.txt)
 
+브라우저 스크린샷: [docker-browser-8080.png](docs/screenshots/docker-browser-8080.png)
+
 ```text
 + docker.exe run -d --name week1-web-8080 -p 8080:80 workstation-nginx:1.0
 + docker.exe run -d --name week1-web-8081 -p 8081:80 workstation-nginx:1.0
@@ -239,6 +241,8 @@ persisted-from-volume
 - [git-config.txt](docs/logs/git-config.txt)
 - [github-auth.txt](docs/logs/github-auth.txt)
 - [github-remote.txt](docs/logs/github-remote.txt)
+
+VS Code 연동 스크린샷: [vscode-source-control-github.png](docs/screenshots/vscode-source-control-github.png)
 
 ```text
 user.name=NiceTry3675
