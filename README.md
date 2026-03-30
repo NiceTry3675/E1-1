@@ -7,6 +7,7 @@
 - 목표: 터미널 중심으로 개발 워크스테이션을 구축하고, Docker 컨테이너를 직접 다뤄 보며 재현 가능한 실행 환경을 만든다.
 - 선택한 구현 방식: `nginx:alpine` 기반 커스텀 이미지 + 정적 HTML 페이지
 - 제출 기준: README만 읽어도 수행 절차, 검증 방법, 결과 위치를 확인할 수 있어야 한다.
+- GitHub 저장소: `https://github.com/NiceTry3675/E1-1`
 
 ## 2. 실행 환경
 
@@ -52,6 +53,7 @@ git version 2.43.0
 - 볼륨 영속성: [volume.txt](docs/logs/volume.txt)
 - Git 설정: [git-config.txt](docs/logs/git-config.txt)
 - GitHub 인증 상태: [github-auth.txt](docs/logs/github-auth.txt)
+- GitHub 원격 생성 / push: [github-remote.txt](docs/logs/github-remote.txt)
 
 ## 5. 터미널 조작 로그
 
@@ -236,6 +238,7 @@ persisted-from-volume
 
 - [git-config.txt](docs/logs/git-config.txt)
 - [github-auth.txt](docs/logs/github-auth.txt)
+- [github-remote.txt](docs/logs/github-remote.txt)
 
 ```text
 user.name=NiceTry3675
@@ -247,6 +250,13 @@ init.defaultbranch=main
 Logged in to github.com account NiceTry3675
 Git operations protocol: https
 Token: gho_************************************
+```
+
+```text
+gh repo create E1-1 --public --source=. --remote=origin --push
+https://github.com/NiceTry3675/E1-1
+origin  https://github.com/NiceTry3675/E1-1.git (fetch)
+origin  https://github.com/NiceTry3675/E1-1.git (push)
 ```
 
 참고:

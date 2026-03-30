@@ -1,0 +1,8 @@
++ gh repo create E1-1 --public --source=. --remote=origin --push
+https://github.com/NiceTry3675/E1-1
+To https://github.com/NiceTry3675/E1-1.git
+ * [new branch]      HEAD -> main
+branch 'main' set up to track 'origin/main'.
++ git remote -v
+origin	https://github.com/NiceTry3675/E1-1.git (fetch)
+origin	https://github.com/NiceTry3675/E1-1.git (push)
