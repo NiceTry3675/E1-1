@@ -1,0 +1,144 @@
++ docker.exe build -t workstation-nginx:1.0 .
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 DONE 0.0s
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 246B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/nginx:alpine
+#2 DONE 2.3s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 2.36kB 0.0s done
+#4 DONE 0.1s
+
+#5 [1/2] FROM docker.io/library/nginx:alpine@sha256:e7257f1ef28ba17cf7c248cb8ccf6f0c6e0228ab9c315c152f9c203cd34cf6d1
+#5 resolve docker.io/library/nginx:alpine@sha256:e7257f1ef28ba17cf7c248cb8ccf6f0c6e0228ab9c315c152f9c203cd34cf6d1 0.0s done
+#5 DONE 0.1s
+
+#5 [1/2] FROM docker.io/library/nginx:alpine@sha256:e7257f1ef28ba17cf7c248cb8ccf6f0c6e0228ab9c315c152f9c203cd34cf6d1
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 0B / 20.25MB 0.2s
+#5 sha256:4d9d41f3822d171ccc5f2cdfd75ad846ac4c7ed1cd36fb998fe2c0ce4501647b 0B / 1.40kB 0.2s
+#5 sha256:c2bd5ab177271dd59f19a46c214b1327f5c428cd075437ec0155ae71d0cdadc1 0B / 1.21kB 0.2s
+#5 sha256:3f4ad4352d4f91018e2b4910b9db24c08e70192c3b75d0d6fff0120c838aa0bb 0B / 402B 0.2s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 0B / 20.25MB 17.8s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 1.05MB / 20.25MB 18.0s
+#5 sha256:4d9d41f3822d171ccc5f2cdfd75ad846ac4c7ed1cd36fb998fe2c0ce4501647b 0B / 1.40kB 17.8s
+#5 sha256:c2bd5ab177271dd59f19a46c214b1327f5c428cd075437ec0155ae71d0cdadc1 0B / 1.21kB 17.8s
+#5 sha256:3f4ad4352d4f91018e2b4910b9db24c08e70192c3b75d0d6fff0120c838aa0bb 0B / 402B 17.8s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 2.10MB / 20.25MB 0.8s
+#5 sha256:4d9d41f3822d171ccc5f2cdfd75ad846ac4c7ed1cd36fb998fe2c0ce4501647b 1.40kB / 1.40kB 0.7s done
+#5 sha256:c2bd5ab177271dd59f19a46c214b1327f5c428cd075437ec0155ae71d0cdadc1 1.21kB / 1.21kB 0.9s done
+#5 sha256:cf1159c696ee2a72b85634360dbada071db61bceaad253db7fda65c45a58414c 0B / 953B 0.2s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 3.15MB / 20.25MB 18.3s
+#5 sha256:3f4ad4352d4f91018e2b4910b9db24c08e70192c3b75d0d6fff0120c838aa0bb 402B / 402B 18.3s done
+#5 sha256:cf1159c696ee2a72b85634360dbada071db61bceaad253db7fda65c45a58414c 0B / 953B 17.7s
+#5 sha256:91d1c9c22f2c631288354fadb2decc448ce151d7a197c167b206588e09dcd50a 0B / 626B 0.2s
+#5 sha256:cf1159c696ee2a72b85634360dbada071db61bceaad253db7fda65c45a58414c 953B / 953B 0.5s done
+#5 sha256:8892f80f46a05d59a4cde3bcbb1dd26ed2441d4214870a4a7b318eaa476a0a54 0B / 1.87MB 0.2s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 4.19MB / 20.25MB 1.2s
+#5 sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 0B / 3.86MB 0.2s
+#5 sha256:91d1c9c22f2c631288354fadb2decc448ce151d7a197c167b206588e09dcd50a 626B / 626B done
+#5 sha256:8892f80f46a05d59a4cde3bcbb1dd26ed2441d4214870a4a7b318eaa476a0a54 1.05MB / 1.87MB
+#5 sha256:8892f80f46a05d59a4cde3bcbb1dd26ed2441d4214870a4a7b318eaa476a0a54 1.87MB / 1.87MB done
+#5 sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 1.05MB / 3.86MB 1.2s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 5.24MB / 20.25MB 2.4s
+#5 sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 2.10MB / 3.86MB 1.8s
+#5 sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 3.15MB / 3.86MB 2.4s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 6.29MB / 20.25MB 3.9s
+#5 sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 3.86MB / 3.86MB 2.6s done
+#5 extracting sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153
+#5 extracting sha256:589002ba0eaed121a1dbf42f6648f29e5be55d5c8a6ee0f8eaa0285cc21ac153 0.1s done
+#5 extracting sha256:8892f80f46a05d59a4cde3bcbb1dd26ed2441d4214870a4a7b318eaa476a0a54
+#5 extracting sha256:8892f80f46a05d59a4cde3bcbb1dd26ed2441d4214870a4a7b318eaa476a0a54 0.2s done
+#5 extracting sha256:91d1c9c22f2c631288354fadb2decc448ce151d7a197c167b206588e09dcd50a 0.0s done
+#5 extracting sha256:cf1159c696ee2a72b85634360dbada071db61bceaad253db7fda65c45a58414c 0.0s done
+#5 extracting sha256:3f4ad4352d4f91018e2b4910b9db24c08e70192c3b75d0d6fff0120c838aa0bb 0.0s done
+#5 extracting sha256:c2bd5ab177271dd59f19a46c214b1327f5c428cd075437ec0155ae71d0cdadc1
+#5 extracting sha256:c2bd5ab177271dd59f19a46c214b1327f5c428cd075437ec0155ae71d0cdadc1 0.0s done
+#5 extracting sha256:4d9d41f3822d171ccc5f2cdfd75ad846ac4c7ed1cd36fb998fe2c0ce4501647b 0.0s done
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 7.34MB / 20.25MB 4.9s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 8.39MB / 20.25MB 5.2s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 10.49MB / 20.25MB 22.8s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 11.53MB / 20.25MB 22.9s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 12.58MB / 20.25MB 5.7s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 13.63MB / 20.25MB 6.0s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 14.68MB / 20.25MB 6.4s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 15.73MB / 20.25MB 7.2s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 16.78MB / 20.25MB 7.5s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 17.83MB / 20.25MB 8.1s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 18.87MB / 20.25MB 8.7s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 19.92MB / 20.25MB 9.3s
+#5 sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 20.25MB / 20.25MB 9.4s done
+#5 extracting sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08
+#5 extracting sha256:3370263bc02adcf5c4f51831d2bf1d54dbf9a6a80b0bf32c5c9b9400630eaa08 0.5s done
+#5 DONE 10.0s
+
+#6 [2/2] COPY site/ /usr/share/nginx/html/
+#6 DONE 0.1s
+
+#7 exporting to image
+#7 exporting layers 0.1s done
+#7 exporting manifest sha256:bea8fb0c0e3ac53ef77beaabefa627950f5bef0657d40af83ce28c68cda31417 0.0s done
+#7 exporting config sha256:259770b0fa1064b850216aacf0dbece65927422863119ceabd687a151f9b810f done
+#7 exporting attestation manifest sha256:7e83ec8927c160b728f66d8f80f2e847075a30855e2580cdcdeb2d3adb6acbc7 0.0s done
+#7 exporting manifest list sha256:50d4c44c3b000040f1c8526389878bfb328126ac326b50fff9222895b97e01ac 0.0s done
+#7 naming to docker.io/library/workstation-nginx:1.0 done
+#7 unpacking to docker.io/library/workstation-nginx:1.0 0.0s done
+#7 DONE 0.2s
++ docker.exe run -d --name week1-web-8080 -p 8080:80 workstation-nginx:1.0
+c77734d34f50311845678ca6f85856b9449f764b877cf9282e0e46f51a7df38b
++ docker.exe run -d --name week1-web-8081 -p 8081:80 workstation-nginx:1.0
+c69c8bed7de097e6987f286a4217a1956ee9323ef261b8efdf8da2493aeb1309
++ sleep 2
++ curl -s http://localhost:8080
++ rg 'Codyssey E1-1|Bind mount status'
+  <title>Codyssey E1-1</title>
+    <h1>Codyssey E1-1</h1>
+    <p id="bind-marker">Bind mount status: initial content</p>
++ curl -s http://localhost:8081
++ rg 'Codyssey E1-1|Bind mount status'
+  <title>Codyssey E1-1</title>
+    <h1>Codyssey E1-1</h1>
+    <p id="bind-marker">Bind mount status: initial content</p>
++ docker.exe ps
+CONTAINER ID   IMAGE                   COMMAND                   CREATED          STATUS                  PORTS                                     NAMES
+c69c8bed7de0   workstation-nginx:1.0   "/docker-entrypoint.…"   19 seconds ago   Up 2 seconds            0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   week1-web-8081
+c77734d34f50   workstation-nginx:1.0   "/docker-entrypoint.…"   20 seconds ago   Up Less than a second   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   week1-web-8080
+2f8596da9ffa   ubuntu                  "bash"                    45 seconds ago   Up 28 seconds                                                     ubuntu-lab
++ docker.exe logs week1-web-8080
+/docker-entrypoint.sh: /docker-entrypoint.d/ is not empty, will attempt to perform configuration
+2026/03/30 13:33:18 [notice] 1#1: using the "epoll" event method
+/docker-entrypoint.sh: Looking for shell scripts in /docker-entrypoint.d/
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+10-listen-on-ipv6-by-default.sh: info: Getting the checksum of /etc/nginx/conf.d/default.conf
+10-listen-on-ipv6-by-default.sh: info: Enabled listen on IPv6 in /etc/nginx/conf.d/default.conf
+/docker-entrypoint.sh: Sourcing /docker-entrypoint.d/15-local-resolvers.envsh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/20-envsubst-on-templates.sh
+/docker-entrypoint.sh: Launching /docker-entrypoint.d/30-tune-worker-processes.sh
+/docker-entrypoint.sh: Configuration complete; ready for start up
+172.17.0.1 - - [30/Mar/2026:13:33:20 +0000] "GET / HTTP/1.1" 200 2289 "-" "curl/8.5.0" "-"
+2026/03/30 13:33:18 [notice] 1#1: nginx/1.29.7
+2026/03/30 13:33:18 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+2026/03/30 13:33:18 [notice] 1#1: OS: Linux 6.6.87.2-microsoft-standard-WSL2
+2026/03/30 13:33:18 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 1048576:1048576
+2026/03/30 13:33:18 [notice] 1#1: start worker processes
+2026/03/30 13:33:18 [notice] 1#1: start worker process 30
+2026/03/30 13:33:18 [notice] 1#1: start worker process 31
+2026/03/30 13:33:18 [notice] 1#1: start worker process 32
+2026/03/30 13:33:18 [notice] 1#1: start worker process 33
+2026/03/30 13:33:18 [notice] 1#1: start worker process 34
+2026/03/30 13:33:18 [notice] 1#1: start worker process 35
+2026/03/30 13:33:18 [notice] 1#1: start worker process 36
+2026/03/30 13:33:18 [notice] 1#1: start worker process 37
+2026/03/30 13:33:18 [notice] 1#1: start worker process 38
+2026/03/30 13:33:18 [notice] 1#1: start worker process 39
+2026/03/30 13:33:18 [notice] 1#1: start worker process 40
+2026/03/30 13:33:18 [notice] 1#1: start worker process 41

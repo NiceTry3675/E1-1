@@ -1,0 +1,6 @@
+docs/screenshots/*.png
+docs/screenshots/*.jpg
+docs/screenshots/*.jpeg
+docs/screenshots/*.webp
+docs/screenshots/*.gif
+*.log

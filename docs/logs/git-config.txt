@@ -1,0 +1,10 @@
+core.autocrlf=input
+core.filemode=false
+core.safecrlf=warn
+user.name=NiceTry3675
+user.email=to***@hs.ac.kr
+credential.https://github.com.helper=
+credential.https://github.com.helper=!/usr/bin/gh auth git-credential
+credential.https://gist.github.com.helper=
+credential.https://gist.github.com.helper=!/usr/bin/gh auth git-credential
+init.defaultbranch=main

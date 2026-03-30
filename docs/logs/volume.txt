@@ -1,0 +1,24 @@
++ docker.exe volume create week1-data
+week1-data
++ docker.exe run -dit --name week1-volume -v week1-data:/data ubuntu bash
+c57e6ce03d46e795effccf68574cd259e0ded70a3c27a92ae31f0cecec54ea32
++ docker.exe exec week1-volume bash -lc 'echo persisted-from-volume > /data/hello.txt && cat /data/hello.txt'
+persisted-from-volume
++ docker.exe rm -f week1-volume
+week1-volume
++ docker.exe run -dit --name week1-volume-2 -v week1-data:/data ubuntu bash
+643aa44927335db514dde9c66e3b9032e750e682b800a80bd153459b9ac87a85
++ docker.exe exec week1-volume-2 bash -lc 'cat /data/hello.txt'
+persisted-from-volume
++ docker.exe volume inspect week1-data
+[
+    {
+        "CreatedAt": "2026-03-30T13:34:16Z",
+        "Driver": "local",
+        "Labels": null,
+        "Mountpoint": "/var/lib/docker/volumes/week1-data/_data",
+        "Name": "week1-data",
+        "Options": null,
+        "Scope": "local"
+    }
+]
