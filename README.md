@@ -179,7 +179,9 @@ COPY site/ /usr/share/nginx/html/
 
 전체 로그: [custom-image.txt](docs/logs/custom-image.txt)
 
-브라우저 스크린샷: [docker-browser-8080.png](docs/screenshots/docker-browser-8080.png)
+브라우저 스크린샷:
+
+![Docker browser proof](docs/screenshots/docker-browser-8080.png)
 
 ```text
 + docker.exe run -d --name week1-web-8080 -p 8080:80 workstation-nginx:1.0
@@ -234,7 +236,7 @@ persisted-from-volume
 
 ## 14. Git 설정 및 GitHub 연동
 
-기본 브랜치를 `main`으로 설정했고, GitHub CLI 인증 상태를 확인했다. 토큰과 이메일은 마스킹했다.
+기본 브랜치를 `main`으로 설정했고, `git config --list` 결과와 GitHub CLI 인증 상태를 확인했다. 토큰과 이메일은 마스킹했다.
 
 전체 로그:
 
@@ -242,7 +244,9 @@ persisted-from-volume
 - [github-auth.txt](docs/logs/github-auth.txt)
 - [github-remote.txt](docs/logs/github-remote.txt)
 
-VS Code 연동 스크린샷: [vscode-source-control-github.png](docs/screenshots/vscode-source-control-github.png)
+VS Code 연동 스크린샷:
+
+![VS Code GitHub proof](docs/screenshots/vscode-source-control-github.png)
 
 ```text
 user.name=NiceTry3675
