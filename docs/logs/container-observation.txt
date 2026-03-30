@@ -1,0 +1,23 @@
++ docker rm -f ubuntu-observe-test
+ubuntu-observe-test
++ echo 'attach observation uses timeout because automated logs cannot send detach keys reliably'
+attach observation uses timeout because automated logs cannot send detach keys reliably
++ timeout 2 script -qfc 'docker attach ubuntu-lab' /tmp/attach-observation.log
++ true
++ echo '--- attach session transcript ---'
+--- attach session transcript ---
++ sed -n 1,20p /tmp/attach-observation.log
++ echo '--- container state after attach session ended ---'
+--- container state after attach session ended ---
++ docker ps --filter name=ubuntu-lab
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NAMES
+2f8596da9ffa   ubuntu    "bash"    56 minutes ago   Up 56 minutes             ubuntu-lab
++ echo '--- exec session ---'
+--- exec session ---
++ docker exec ubuntu-lab bash -lc 'echo exec-shell-exit-demo'
+exec-shell-exit-demo
++ echo '--- container state after exec ended ---'
+--- container state after exec ended ---
++ docker ps --filter name=ubuntu-lab
+CONTAINER ID   IMAGE     COMMAND   CREATED          STATUS          PORTS     NAMES
+2f8596da9ffa   ubuntu    "bash"    56 minutes ago   Up 56 minutes             ubuntu-lab

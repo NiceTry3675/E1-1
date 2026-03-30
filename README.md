@@ -48,6 +48,7 @@ git version 2.43.0
 - 환경 정보: [environment.txt](docs/logs/environment.txt)
 - 터미널 기본 조작 / 권한: [cli-session.txt](docs/logs/cli-session.txt)
 - Docker 설치 점검 / 기본 운영 / `hello-world` / `ubuntu`: [docker-basics.txt](docs/logs/docker-basics.txt)
+- `attach` / `exec` 관찰: [container-observation.txt](docs/logs/container-observation.txt)
 - Dockerfile 빌드 / 포트 매핑 / 웹 로그: [custom-image.txt](docs/logs/custom-image.txt)
 - 바인드 마운트: [bind-mount.txt](docs/logs/bind-mount.txt)
 - 바인드 마운트 경로 오류 재현: [bind-mount-invalid-path.txt](docs/logs/bind-mount-invalid-path.txt)
@@ -138,7 +139,10 @@ ubuntu-stop-demo   Exited (137)
 
 `hello-world`로 설치 확인을 마쳤고, `ubuntu-lab` 컨테이너 안에서 실제 명령을 실행했다.
 
-전체 로그: [docker-basics.txt](docs/logs/docker-basics.txt)
+전체 로그:
+
+- [docker-basics.txt](docs/logs/docker-basics.txt)
+- [container-observation.txt](docs/logs/container-observation.txt)
 
 ```text
 + docker.exe run --name week1-hello hello-world
@@ -154,8 +158,20 @@ hello-from-container
 
 `attach`와 `exec` 차이 정리:
 
+```text
++ timeout 2 script -qfc 'docker attach ubuntu-lab' /tmp/attach-observation.log
++ docker ps --filter name=ubuntu-lab
+ubuntu-lab   Up
++ docker exec ubuntu-lab bash -lc 'echo exec-shell-exit-demo'
+exec-shell-exit-demo
++ docker ps --filter name=ubuntu-lab
+ubuntu-lab   Up
+```
+
 - `attach`는 컨테이너의 메인 프로세스 표준 입출력에 직접 붙는다.
 - `exec`는 이미 실행 중인 컨테이너 안에 별도 프로세스를 추가 실행한다.
+- 자동 로그에서는 `attach`를 제한 시간으로 붙였다 끊은 뒤에도 `ubuntu-lab`이 계속 `Up` 상태인 것을 확인했다.
+- `exec`로 실행한 셸이 종료된 뒤에도 `docker ps`에서 `ubuntu-lab`이 계속 `Up` 상태라서, `exec`는 메인 프로세스를 종료시키지 않음을 확인했다.
 - 이번 과제에서는 메인 `bash`를 유지한 채 실험해야 했기 때문에 관찰과 기록에는 `exec`가 더 안전했다.
 
 ## 10. Dockerfile 기반 커스텀 이미지
@@ -204,6 +220,11 @@ COPY site/ /usr/share/nginx/html/
 호스트의 `practice/bind-proof/` 디렉터리를 NGINX 컨테이너에 읽기 전용으로 마운트하고, `8083` 포트에서 호스트 파일 내용을 직접 바꾼 뒤 컨테이너를 재생성하지 않고 응답이 바뀌는지 확인했다.
 
 전체 로그: [bind-mount.txt](docs/logs/bind-mount.txt)
+
+환경별 주의사항:
+
+- 현재 로그의 `\\wsl.localhost\...` 경로는 `WSL + Docker Desktop` 조합에서 사용한 bind mount 경로다.
+- native Linux/macOS에서는 같은 절차를 `-v "$(pwd)/practice/bind-proof:/usr/share/nginx/html:ro"`처럼 바로 현재 경로로 실행하면 된다.
 
 ```text
 + printf '%s\n' '<!doctype html>' '<html><body><p id="bind-marker">Bind mount status: before host edit</p></body></html>' > practice/bind-proof/index.html
@@ -300,7 +321,7 @@ origin  https://github.com/NiceTry3675/E1-1.git (push)
 - 문제: 첫 바인드 마운트 시 `is not a valid Windows path` 오류가 발생했다.
 - 원인 가설: `wslpath -w`로 만든 경로를 감싸는 quoting이 잘못되어 경로 앞뒤에 불필요한 문자가 붙었다.
 - 확인: [bind-mount-invalid-path.txt](docs/logs/bind-mount-invalid-path.txt)에 잘못된 경로와 오류 메시지를 따로 기록했다.
-- 해결: `wslpath -w "$(pwd)/practice/bind-proof"` 형식으로 경로를 다시 만들고 `\\wsl.localhost\Ubuntu\...` 형식으로 전달해 성공했다.
+- 해결: `WSL + Docker Desktop`에서는 `wslpath -w "$(pwd)/practice/bind-proof"`로 변환한 경로를 쓰고, native Linux/macOS에서는 `$(pwd)/practice/bind-proof`를 직접 사용하면 된다.
 
 ### 3) Git 기본 브랜치가 명시돼 있지 않음
 
