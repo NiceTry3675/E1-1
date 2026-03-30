@@ -57,7 +57,27 @@ git version 2.43.0
 - GitHub 인증 상태: [github-auth.txt](docs/logs/github-auth.txt)
 - GitHub 원격 생성 / push: [github-remote.txt](docs/logs/github-remote.txt)
 
-## 5. 터미널 조작 로그
+## 5. 디렉터리 구조 설계 기준
+
+이 저장소는 "실행 파일", "증거", "실습 흔적"을 분리하는 기준으로 구성했다.
+
+- `site/`: 커스텀 이미지에 실제로 복사되는 웹 서버 정적 파일을 둔다. 빌드 대상이 명확해야 해서 런타임 산출물과 분리했다.
+- `docs/logs/`: 평가자가 명령어 입력과 출력 결과를 바로 따라갈 수 있도록 로그만 모아 둔다. README에서는 이 폴더를 증거 인덱스로 사용한다.
+- `docs/screenshots/`: 브라우저 접속, VS Code 연동처럼 로그만으로 부족한 시각 증거를 분리한다.
+- `practice/cli-lab/`: `mkdir`, `cp`, `mv`, `rm`, `chmod` 같은 CLI 실습 흔적을 남기는 별도 공간이다. 제출용 앱 파일과 섞이지 않게 분리했다.
+- `practice/bind-proof/`: 바인드 마운트 전용 테스트 디렉터리다. `site/`와 분리해 두어 커스텀 이미지의 고정 결과와 바인드 마운트의 "호스트 변경 전/후" 실험이 서로 영향을 주지 않게 했다.
+
+## 6. 재현성 기준
+
+포트와 볼륨은 "이름과 역할을 먼저 고정하고, 로그에서 같은 이름을 반복 사용"하는 방식으로 정리했다.
+
+- 커스텀 이미지 이름은 `workstation-nginx:1.0`으로 고정했다. README와 로그에서 같은 이름을 사용하므로 그대로 다시 빌드할 수 있다.
+- 포트 역할을 분리했다. `8080`, `8081`은 같은 이미지를 두 번 실행하는 포트 매핑 검증용이고, `8083`은 바인드 마운트 변경 반영 확인용이다.
+- 볼륨 이름을 `week1-data`로 고정해서, 생성 컨테이너와 재실행 컨테이너가 같은 저장소를 공유하도록 만들었다.
+- README에는 "어떤 명령으로 무엇을 검증했는지"를 적고, 상세 출력은 `docs/logs/`로 링크했다. 그래서 문서만 읽고도 같은 순서로 재현할 수 있다.
+- WSL + Docker Desktop과 native Linux/macOS의 bind mount 경로 차이는 문서에 분리해 적어 환경 차이 때문에 막히지 않도록 했다.
+
+## 7. 터미널 조작 로그
 
 실습 경로는 `practice/cli-lab`이다. 절대 경로는 `/home/tomto/projects/codyssey/E1-1/practice/cli-lab`처럼 루트(`/`)부터 시작하는 경로이고, 상대 경로는 현재 위치를 기준으로 한 `practice/cli-lab`, `move-me/renamed.txt` 같은 경로다.
 
@@ -76,7 +96,7 @@ hello cli
 + rm -f empty.txt
 ```
 
-## 6. 권한 실습
+## 8. 권한 실습
 
 파일 권한은 `rwx`를 소유자/그룹/기타 사용자에 대해 숫자로 압축한 표기다. `644`는 `rw-r--r--`, `755`는 `rwxr-xr-x`를 뜻한다.
 
@@ -95,7 +115,7 @@ drwx------ ... perm-dir
 + chmod 755 perm-dir
 ```
 
-## 7. Docker 설치 및 기본 점검
+## 9. Docker 설치 및 기본 점검
 
 Docker Desktop이 실행된 뒤 `desktop-linux` context에서 동작하는 것을 확인했다.
 
@@ -113,7 +133,7 @@ Operating System: Docker Desktop
 OSType: linux
 ```
 
-## 8. Docker 기본 운영 명령
+## 10. Docker 기본 운영 명령
 
 이미지 목록, 컨테이너 목록, 로그, 리소스 사용량을 확인했고, 별도 테스트 컨테이너에 대해 `docker stop`도 수행했다.
 
@@ -135,7 +155,7 @@ ubuntu-stop-demo
 ubuntu-stop-demo   Exited (137)
 ```
 
-## 9. 컨테이너 실행 실습
+## 11. 컨테이너 실행 실습
 
 `hello-world`로 설치 확인을 마쳤고, `ubuntu-lab` 컨테이너 안에서 실제 명령을 실행했다.
 
@@ -174,7 +194,7 @@ ubuntu-lab   Up
 - `exec`로 실행한 셸이 종료된 뒤에도 `docker ps`에서 `ubuntu-lab`이 계속 `Up` 상태라서, `exec`는 메인 프로세스를 종료시키지 않음을 확인했다.
 - 이번 과제에서는 메인 `bash`를 유지한 채 실험해야 했기 때문에 관찰과 기록에는 `exec`가 더 안전했다.
 
-## 10. Dockerfile 기반 커스텀 이미지
+## 12. Dockerfile 기반 커스텀 이미지
 
 선택한 베이스 이미지는 `nginx:alpine`이다.
 
@@ -194,9 +214,16 @@ LABEL org.opencontainers.image.title="codyssey-week1-workstation"
 COPY site/ /usr/share/nginx/html/
 ```
 
-## 11. 포트 매핑 및 접속 증거
+## 13. 포트 매핑 및 접속 증거
 
 동일 이미지를 두 번 실행해 `8080`, `8081` 포트로 각각 접근 가능한 것을 확인했다. 이것으로 이미지와 컨테이너가 분리되어 있고, 같은 이미지에서 여러 컨테이너를 반복 실행할 수 있음을 확인했다.
+
+포트 매핑이 필요한 이유:
+
+- 컨테이너 내부 포트 `80`은 기본적으로 컨테이너 네트워크 안에서만 열려 있다.
+- 호스트 브라우저에서 `localhost:80`이나 `localhost:8080`으로 접근하려면, 호스트 포트와 컨테이너 포트를 `-p 호스트:컨테이너`로 연결해야 한다.
+- 포트 매핑이 없으면 컨테이너 안의 웹 서버가 살아 있어도 호스트에서는 바로 접속할 수 없다.
+- 따라서 포트 매핑은 "격리된 컨테이너 서비스"를 "호스트에서 접근 가능한 서비스"로 노출하는 연결 단계다.
 
 전체 로그: [custom-image.txt](docs/logs/custom-image.txt)
 
@@ -215,7 +242,7 @@ COPY site/ /usr/share/nginx/html/
 <p id="bind-marker">Bind mount status: initial content</p>
 ```
 
-## 12. 바인드 마운트 반영
+## 14. 바인드 마운트 반영
 
 호스트의 `practice/bind-proof/` 디렉터리를 NGINX 컨테이너에 읽기 전용으로 마운트하고, `8083` 포트에서 호스트 파일 내용을 직접 바꾼 뒤 컨테이너를 재생성하지 않고 응답이 바뀌는지 확인했다.
 
@@ -247,7 +274,7 @@ COPY site/ /usr/share/nginx/html/
 - 바인드 마운트는 호스트 파일 변경이 컨테이너에 즉시 반영되는지 확인하는 데 적합하다.
 - 소스 반영 확인이 목적일 때는 이미지 재빌드보다 빠르다.
 
-## 13. Docker 볼륨 영속성 검증
+## 15. Docker 볼륨 영속성 검증
 
 named volume `week1-data`를 만들고, 컨테이너 삭제 전후로 같은 파일이 유지되는지 확인했다.
 
@@ -268,7 +295,7 @@ persisted-from-volume
 - 바인드 마운트는 호스트 디렉터리와 연결된다.
 - 볼륨은 Docker가 관리하는 저장소라서 컨테이너를 지워도 데이터가 남는다.
 
-## 14. Git 설정 및 GitHub 연동
+## 16. Git 설정 및 GitHub 연동
 
 기본 브랜치를 `main`으로 설정했고, `git config --list`와 `gh auth status`를 명령어 포함 로그로 기록했다. 토큰과 이메일은 마스킹했다.
 
@@ -307,7 +334,27 @@ origin  https://github.com/NiceTry3675/E1-1.git (push)
 
 - 본 저장소는 CLI 로그와 VS Code 스크린샷을 함께 남겼다.
 
-## 15. 트러블슈팅
+## 17. 핵심 개념 정리
+
+### 이미지와 컨테이너 차이
+
+- `빌드`: 이미지는 `Dockerfile`로 만드는 템플릿 결과물이다. 예를 들어 `docker build -t workstation-nginx:1.0 .`는 실행 가능한 청사진을 만든다.
+- `실행`: 컨테이너는 이미지를 기반으로 실제 프로세스를 띄운 인스턴스다. 같은 이미지에서 `week1-web-8080`, `week1-web-8081`처럼 여러 컨테이너를 만들 수 있다.
+- `변경`: 컨테이너 안에서 생긴 임시 변경은 컨테이너에 묶인다. 컨테이너를 지우면 사라질 수 있다. 반대로 이미지를 바꾸려면 `Dockerfile`이나 복사할 소스를 고쳐서 다시 빌드해야 한다.
+- `정리`: 이미지는 "설계도", 컨테이너는 "실행 중인 복사본"이다. 그래서 이미지를 한 번 빌드해 두면 여러 컨테이너를 반복 실행해도 같은 시작 상태를 재현할 수 있다.
+
+### 호스트 포트 충돌 진단 순서
+
+호스트 포트가 이미 사용 중이라 포트 매핑이 실패하면 아래 순서로 확인한다.
+
+1. 에러 메시지에서 어느 호스트 포트가 충돌했는지 먼저 확인한다.
+2. `docker ps`로 같은 포트를 이미 쓰는 다른 컨테이너가 있는지 확인한다.
+3. Docker 쪽이 아니면 `ss -ltnp | rg ':8080'` 같은 명령으로 호스트에서 해당 포트를 점유한 프로세스를 찾는다.
+4. 충돌 원인이 테스트용 컨테이너면 `docker stop` 또는 `docker rm -f`로 정리한다.
+5. 정리하기 어려운 프로세스면 다른 빈 포트로 바꿔 `-p 8084:80`처럼 다시 실행한다.
+6. 마지막으로 브라우저나 `curl`로 새 포트가 실제로 열렸는지 다시 검증한다.
+
+## 18. 트러블슈팅
 
 ### 1) WSL 셸에서 `docker`가 처음에는 잡히지 않음
 
@@ -330,7 +377,7 @@ origin  https://github.com/NiceTry3675/E1-1.git (push)
 - 확인: `git config --global init.defaultBranch`가 빈 값이었다.
 - 해결: `git config --global init.defaultBranch main`으로 고정하고 저장소를 `main` 브랜치로 초기화했다.
 
-## 16. 보안 및 개인정보 보호
+## 19. 보안 및 개인정보 보호
 
 - README와 로그에는 토큰 전체 값을 남기지 않았다.
 - Git 이메일은 마스킹했다.
