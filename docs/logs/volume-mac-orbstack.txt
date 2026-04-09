@@ -1,0 +1,18 @@
++ docker rm -f vol-test-orbstack vol-test-orbstack-2 >/dev/null 2>&1 || true
++ docker volume rm week1-data-orbstack >/dev/null 2>&1 || true
++ docker volume create week1-data-orbstack
+week1-data-orbstack
++ docker run -d --name vol-test-orbstack -v week1-data-orbstack:/data ubuntu sleep infinity
+0e6ed29f7b55053a6b2f35fc0997389902688eaef25152330ea3ea9f818c8dc7
++ docker exec vol-test-orbstack bash -lc 'echo hi-from-volume > /data/hello.txt && cat /data/hello.txt'
+hi-from-volume
++ docker rm -f vol-test-orbstack
+vol-test-orbstack
++ docker run -d --name vol-test-orbstack-2 -v week1-data-orbstack:/data ubuntu sleep infinity
+6f0505f754041aa5182ef2fcf9c86cf30d06d5152e1eda5b8a76885a5963e457
++ docker exec vol-test-orbstack-2 bash -lc 'cat /data/hello.txt'
+hi-from-volume
++ docker rm -f vol-test-orbstack-2
+vol-test-orbstack-2
++ docker volume rm week1-data-orbstack
+week1-data-orbstack

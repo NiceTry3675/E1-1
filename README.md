@@ -29,6 +29,23 @@ git version 2.43.0
 1.112.0
 ```
 
+### 현재 복습 환경 (`mac + OrbStack`)
+
+이 저장소의 제출 로그는 `Ubuntu on WSL2` 기준으로 남겨 두고, 현재 머신에서는 같은 과제를 `macOS + OrbStack`으로 다시 따라가며 개념을 복습했다.
+
+- OS: macOS 15.7.4
+- Shell: `zsh`
+- Docker: 28.5.2 (`orbstack` context)
+- Git: 2.53.0
+- GitHub CLI: 2.89.0 설치됨, `gh auth login` 완료
+
+현재 환경 로그:
+
+- [environment-mac-orbstack.txt](docs/logs/environment-mac-orbstack.txt)
+- [docker-orbstack-practice.txt](docs/logs/docker-orbstack-practice.txt)
+- [volume-mac-orbstack.txt](docs/logs/volume-mac-orbstack.txt)
+- [git-config-mac-orbstack.txt](docs/logs/git-config-mac-orbstack.txt)
+
 ## 3. 수행 체크리스트
 
 - [x] 터미널 기본 조작 및 파일/디렉터리 생성
@@ -56,6 +73,10 @@ git version 2.43.0
 - Git 설정: [git-config.txt](docs/logs/git-config.txt)
 - GitHub 인증 상태: [github-auth.txt](docs/logs/github-auth.txt)
 - GitHub 원격 생성 / push: [github-remote.txt](docs/logs/github-remote.txt)
+- 현재 mac 환경 정보: [environment-mac-orbstack.txt](docs/logs/environment-mac-orbstack.txt)
+- 현재 mac Docker 복습 로그: [docker-orbstack-practice.txt](docs/logs/docker-orbstack-practice.txt)
+- 현재 mac 볼륨 복습 로그: [volume-mac-orbstack.txt](docs/logs/volume-mac-orbstack.txt)
+- 현재 mac Git/GitHub 상태: [git-config-mac-orbstack.txt](docs/logs/git-config-mac-orbstack.txt)
 
 ## 5. 디렉터리 구조 설계 기준
 
@@ -76,6 +97,44 @@ git version 2.43.0
 - 볼륨 이름을 `week1-data`로 고정해서, 생성 컨테이너와 재실행 컨테이너가 같은 저장소를 공유하도록 만들었다.
 - README에는 "어떤 명령으로 무엇을 검증했는지"를 적고, 상세 출력은 `docs/logs/`로 링크했다. 그래서 문서만 읽고도 같은 순서로 재현할 수 있다.
 - WSL + Docker Desktop과 native Linux/macOS의 bind mount 경로 차이는 문서에 분리해 적어 환경 차이 때문에 막히지 않도록 했다.
+
+### mac + OrbStack에서 다시 따라할 때 바뀌는 점
+
+- 절대 경로 예시는 `/home/...` 대신 `/Users/<username>/...` 형태로 읽으면 된다.
+- WSL 로그에서 `docker.exe`로 실행한 명령은 macOS에서는 모두 `docker`로 그대로 바꿔 쓰면 된다.
+- Docker context는 `desktop-linux` 대신 `orbstack`으로 보인다.
+- bind mount는 `\\wsl.localhost\\...` 경로 변환 없이 `-v "$(pwd)/practice/bind-proof:/usr/share/nginx/html"`처럼 현재 경로를 직접 연결하면 된다.
+- 현재 mac 환경에서는 `gh auth login`은 완료됐지만, Git 전역 `user.name`, `user.email`, `init.defaultBranch`는 아직 비어 있었다. 따라서 GitHub 인증과 별개로 Git 기본 설정은 한 번 더 채워야 한다.
+
+### mac + OrbStack 복습 순서
+
+아래 순서대로 실행하면 WSL2에서 했던 핵심 흐름을 거의 그대로 다시 확인할 수 있다.
+
+```bash
+docker --version
+docker info
+docker context ls
+
+docker build -t workstation-nginx:1.0 .
+docker run -d --name web-8080 -p 8080:80 workstation-nginx:1.0
+docker run -d --name web-8081 -p 8081:80 workstation-nginx:1.0
+curl -s http://localhost:8080 | rg 'Codyssey E1-1|Bind mount status'
+curl -s http://localhost:8081 | rg 'Codyssey E1-1|Bind mount status'
+
+docker run -dit --name ubuntu-lab ubuntu bash
+docker exec ubuntu-lab bash -lc 'ls / | head && echo hello-from-container'
+
+docker run -d --name bind-web -p 8083:80 \
+  -v "$(pwd)/practice/bind-proof:/usr/share/nginx/html" nginx:alpine
+curl -s http://localhost:8083 | rg 'Bind mount status'
+
+docker volume create week1-data
+docker run -d --name vol-test -v week1-data:/data ubuntu sleep infinity
+docker exec vol-test bash -lc 'echo hi > /data/hello.txt && cat /data/hello.txt'
+docker rm -f vol-test
+docker run -d --name vol-test2 -v week1-data:/data ubuntu sleep infinity
+docker exec vol-test2 bash -lc 'cat /data/hello.txt'
+```
 
 ## 7. 터미널 조작 로그
 

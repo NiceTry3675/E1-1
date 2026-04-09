@@ -1,0 +1,18 @@
++ uname -a
+Darwin c6r8s7.codyssey.kr 24.6.0 Darwin Kernel Version 24.6.0: Mon Jan 19 22:00:10 PST 2026; root:xnu-11417.140.69.708.3~1/RELEASE_X86_64 x86_64
++ sw_vers
+ProductName:		macOS
+ProductVersion:		15.7.4
+BuildVersion:		24G517
++ zsh --version
+zsh 5.9 (x86_64-apple-darwin24.0)
++ docker --version
+Docker version 28.5.2, build ecc6942
++ docker context ls
+NAME         DESCRIPTION                               DOCKER ENDPOINT                                           ERROR
+default      Current DOCKER_HOST based configuration   unix:///var/run/docker.sock                               
+orbstack *   OrbStack                                  unix:///Users/tomtom351778618/.orbstack/run/docker.sock   
++ docker info --format 'Server Version: {{.ServerVersion}} | Context: {{.ClientInfo.Context}} | Operating System: {{.OperatingSystem}} | OSType: {{.OSType}} | Architecture: {{.Architecture}}'
+Server Version: 28.5.2 | Context: orbstack | Operating System: OrbStack | OSType: linux | Architecture: x86_64
++ git --version
+git version 2.53.0

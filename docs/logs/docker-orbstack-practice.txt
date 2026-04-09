@@ -1,0 +1,85 @@
++ docker rm -f orbstack-web-8080 orbstack-web-8081 orbstack-bind ubuntu-lab-orbstack >/dev/null 2>&1 || true
++ docker build -t workstation-nginx:orbstack-review .
+#0 building with "orbstack" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 246B done
+#1 DONE 0.1s
+
+#2 [internal] load metadata for docker.io/library/nginx:alpine
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context:
+#3 transferring context: 2B done
+#3 DONE 0.2s
+
+#4 [1/2] FROM docker.io/library/nginx:alpine
+#4 DONE 0.0s
+
+#5 [internal] load build context
+#5 transferring context: 2.36kB done
+#5 DONE 0.3s
+
+#6 [2/2] COPY site/ /usr/share/nginx/html/
+#6 CACHED
+
+#7 exporting to image
+#7 exporting layers done
+#7 writing image sha256:00ecc6976a81f20f69aba33af4b0aee7b467b6d5fa907c4f4766dcf43443d7a0 0.0s done
+#7 naming to docker.io/library/workstation-nginx:orbstack-review 0.0s done
+#7 DONE 0.1s
++ docker run -d --name orbstack-web-8080 -p 8080:80 workstation-nginx:orbstack-review
+8c4c42ce935d3de1b2cd06305061eb32bc225edd38f978b12007b526b4d9537b
++ docker run -d --name orbstack-web-8081 -p 8081:80 workstation-nginx:orbstack-review
+2da9c159d73e1e47c29566d0ecb22bb0bc55e71cc46a702a367ef20fd98db196
++ curl -s http://localhost:8080 | rg 'Codyssey E1-1|Bind mount status'
+  <title>Codyssey E1-1</title>
+    <h1>Codyssey E1-1</h1>
+    <p id="bind-marker">Bind mount status: initial content</p>
++ curl -s http://localhost:8081 | rg 'Codyssey E1-1|Bind mount status'
+  <title>Codyssey E1-1</title>
+    <h1>Codyssey E1-1</h1>
+    <p id="bind-marker">Bind mount status: initial content</p>
++ docker run -dit --name ubuntu-lab-orbstack ubuntu bash
+459d983b9d98239ac4c7ec54e013847beea4b92245a2ef997d0f9de2808af642
++ docker exec ubuntu-lab-orbstack bash -lc 'ls / | head && echo hello-from-orbstack-container'
+bin
+boot
+dev
+etc
+home
+lib
+lib64
+media
+mnt
+opt
+hello-from-orbstack-container
++ docker ps --format 'table {{.Names}}	{{.Status}}	{{.Ports}}'
+NAMES                 STATUS                  PORTS
+ubuntu-lab-orbstack   Up Less than a second   
+orbstack-web-8081     Up Less than a second   0.0.0.0:8081->80/tcp, [::]:8081->80/tcp
+orbstack-web-8080     Up 1 second             0.0.0.0:8080->80/tcp, [::]:8080->80/tcp
++ mktemp -d /tmp/e1-bind-XXXXXX
+/tmp/e1-bind-mRuiJL
++ printf '%s
+' '<!doctype html>' '<html><body><p id="bind-marker">Bind mount status: before host edit</p></body></html>' > "/tmp/e1-bind-mRuiJL/index.html"
++ docker run -d --name orbstack-bind -p 8083:80 -v /tmp/e1-bind-mRuiJL:/usr/share/nginx/html nginx:alpine
+98867641afa38a58fa582b656b6d36e625c63a9830db563f0cc436cf60bb28c6
++ curl -s http://localhost:8083 | rg 'Bind mount status'
+<html><body><p id="bind-marker">Bind mount status: before host edit</p></body></html>
++ printf '%s
+' '<!doctype html>' '<html><body><p id="bind-marker">Bind mount status: mac orbstack live update</p></body></html>' > "/tmp/e1-bind-mRuiJL/index.html"
++ curl -s http://localhost:8083 | rg 'Bind mount status'
+<html><body><p id="bind-marker">Bind mount status: mac orbstack live update</p></body></html>
++ docker stats --no-stream --format 'table {{.Name}}	{{.CPUPerc}}	{{.MemUsage}}' orbstack-web-8080 ubuntu-lab-orbstack orbstack-bind
+NAME                  CPU %     MEM USAGE / LIMIT
+orbstack-web-8080     0.00%     15.14MiB / 15.67GiB
+ubuntu-lab-orbstack   0.00%     5.824MiB / 15.67GiB
+orbstack-bind         0.00%     6.238MiB / 15.67GiB
++ docker rm -f orbstack-web-8080 orbstack-web-8081 orbstack-bind ubuntu-lab-orbstack
+orbstack-web-8080
+orbstack-web-8081
+orbstack-bind
+ubuntu-lab-orbstack
++ rm -rf /tmp/e1-bind-mRuiJL
