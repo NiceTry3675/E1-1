@@ -1,0 +1,19 @@
+services:
+  web:
+    build:
+      context: .
+    environment:
+      APP_MODE: ${APP_MODE}
+      APP_TITLE: ${APP_TITLE}
+      API_BASE_URL: ${API_BASE_URL}
+    ports:
+      - "${HOST_HTTP_PORT}:80"
+    depends_on:
+      - echo
+
+  echo:
+    image: hashicorp/http-echo:1.0.0
+    command:
+      - "-listen=:5678"
+      - "-text=${ECHO_TEXT}"
+

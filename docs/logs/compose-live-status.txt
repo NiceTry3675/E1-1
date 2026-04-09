@@ -1,0 +1,11 @@
++ docker compose -p week1-bonus-live -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose ps
+NAME                      IMAGE                       COMMAND                  SERVICE   CREATED          STATUS          PORTS
+week1-bonus-live-echo-1   hashicorp/http-echo:1.0.0   "/http-echo -listen=…"   echo      35 seconds ago   Up 34 seconds   5678/tcp
+week1-bonus-live-web-1    week1-bonus-live-web        "/entrypoint.sh"         web       35 seconds ago   Up 34 seconds   0.0.0.0:8090->80/tcp, [::]:8090->80/tcp
++ curl -s http://localhost:8090 | rg 'Codyssey Compose Bonus|App mode|API base URL'
+  <title>Codyssey Compose Bonus</title>
+    <h1>Codyssey Compose Bonus</h1>
+    <p id="app-mode">App mode: <strong>compose-demo</strong></p>
+    <p id="api-base-url">API base URL: <code>/api/</code></p>
++ curl -s http://localhost:8090/api/
+hello-from-compose-echo

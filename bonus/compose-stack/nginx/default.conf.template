@@ -1,0 +1,19 @@
+server {
+    listen 80;
+    server_name _;
+
+    root /usr/share/nginx/html;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /api/ {
+        resolver 127.0.0.11 ipv6=off valid=30s;
+        set $echo_upstream echo:5678;
+        proxy_pass http://$echo_upstream/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Compose-Mode ${APP_MODE};
+    }
+}

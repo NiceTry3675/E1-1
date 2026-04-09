@@ -1,0 +1,20 @@
++ gh auth status
+github.com
+  ✓ Logged in to github.com account NiceTry3675 (keyring)
+  - Active account: true
+  - Git operations protocol: https
+  - Token: gho_************************************
+  - Token scopes: 'admin:public_key', 'gist', 'read:org', 'repo', 'workflow'
+
++ gh ssh-key add ~/.ssh/id_ed25519_github.pub --title "mac-orbstack-e1"
+✓ Public key added to your account
+
++ gh ssh-key list | rg 'mac-orbstack-e1'
+mac-orbstack-e1	ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILVcDMxtfvMm3QoBwu0kRmUJnzq00zfbjYTAqNIzmGox	2026-04-09T07:28:50Z	148047114	authentication
+
++ ssh -T git@github.com
+Hi NiceTry3675! You've successfully authenticated, but GitHub does not provide shell access.
+
++ git remote -v
+origin	git@github.com:NiceTry3675/E1-1.git (fetch)
+origin	git@github.com:NiceTry3675/E1-1.git (push)

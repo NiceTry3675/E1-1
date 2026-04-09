@@ -77,6 +77,9 @@ git version 2.43.0
 - 현재 mac Docker 복습 로그: [docker-orbstack-practice.txt](docs/logs/docker-orbstack-practice.txt)
 - 현재 mac 볼륨 복습 로그: [volume-mac-orbstack.txt](docs/logs/volume-mac-orbstack.txt)
 - 현재 mac Git/GitHub 상태: [git-config-mac-orbstack.txt](docs/logs/git-config-mac-orbstack.txt)
+- Docker Compose 보너스 실습 로그: [compose-bonus.txt](docs/logs/compose-bonus.txt)
+- 현재 유지 중인 Compose 스택 상태: [compose-live-status.txt](docs/logs/compose-live-status.txt)
+- GitHub SSH 전환 로그: [github-ssh.txt](docs/logs/github-ssh.txt)
 
 ## 5. 디렉터리 구조 설계 기준
 
@@ -87,6 +90,7 @@ git version 2.43.0
 - `docs/screenshots/`: 브라우저 접속, VS Code 연동처럼 로그만으로 부족한 시각 증거를 분리한다.
 - `practice/cli-lab/`: `mkdir`, `cp`, `mv`, `rm`, `chmod` 같은 CLI 실습 흔적을 남기는 별도 공간이다. 제출용 앱 파일과 섞이지 않게 분리했다.
 - `practice/bind-proof/`: 바인드 마운트 전용 테스트 디렉터리다. `site/`와 분리해 두어 커스텀 이미지의 고정 결과와 바인드 마운트의 "호스트 변경 전/후" 실험이 서로 영향을 주지 않게 했다.
+- `bonus/compose-stack/`: Docker Compose 보너스 과제 전용 디렉터리다. `compose.yaml`, 커스텀 웹 이미지 Dockerfile, 환경 변수 파일을 묶어 두었다.
 
 ## 6. 재현성 기준
 
@@ -436,7 +440,61 @@ origin  https://github.com/NiceTry3675/E1-1.git (push)
 - 확인: `git config --global init.defaultBranch`가 빈 값이었다.
 - 해결: `git config --global init.defaultBranch main`으로 고정하고 저장소를 `main` 브랜치로 초기화했다.
 
-## 19. 보안 및 개인정보 보호
+## 19. 보너스 과제: Docker Compose / 환경 변수
+
+`Requirements.md`의 보너스 항목 중 로컬에서 바로 재현 가능한 항목을 현재 `mac + OrbStack` 환경에서 진행했다.
+
+완료한 항목:
+
+- Docker Compose 기초: 단일 서비스 `web`만 `up -d web --no-deps`로 실행
+- Docker Compose 멀티 컨테이너: `web + echo` 두 서비스를 함께 실행
+- Compose 운영 명령어: `up`, `ps`, `logs`, `down` 순서로 관리
+- 환경 변수 활용: `.env.compose`, `.env.compose.override`로 포트/모드/응답 문구 변경
+- GitHub SSH 키 설정: 새 `ed25519` 키 생성, GitHub 등록, 저장소 원격을 SSH로 전환
+
+관련 파일:
+
+- [compose.yaml](bonus/compose-stack/compose.yaml)
+- [Dockerfile](bonus/compose-stack/Dockerfile)
+- [entrypoint.sh](bonus/compose-stack/entrypoint.sh)
+- [default.conf.template](bonus/compose-stack/nginx/default.conf.template)
+- [index.template.html](bonus/compose-stack/site/index.template.html)
+- [.env.compose](bonus/compose-stack/.env.compose)
+- [.env.compose.override](bonus/compose-stack/.env.compose.override)
+- [compose-bonus.txt](docs/logs/compose-bonus.txt)
+- [compose-live-status.txt](docs/logs/compose-live-status.txt)
+- [github-ssh.txt](docs/logs/github-ssh.txt)
+
+핵심 검증:
+
+- 단일 서비스 실행 시 `localhost:8090`에서 Compose로 빌드한 페이지가 열렸다.
+- 멀티 컨테이너 실행 시 `localhost:8090/api/`가 `echo` 서비스 응답 `hello-from-compose-echo`를 반환했다.
+- `docker compose exec -T web wget -qO- http://echo:5678/`로 컨테이너 간 서비스 이름 기반 통신을 확인했다.
+- 환경 변수 오버라이드 파일을 적용했을 때 `localhost:8092` 페이지의 `App mode`가 `compose-env`로 바뀌고 `/api/` 응답도 `compose-env-reply`로 바뀌었다.
+
+현재 유지 중인 최종 스택:
+
+- Compose project: `week1-bonus-live`
+- 접속 주소: `http://localhost:8090`
+- API 프록시: `http://localhost:8090/api/`
+
+```text
++ docker compose -p week1-bonus-live -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose ps
+NAME                      IMAGE                       SERVICE   PORTS
+week1-bonus-live-echo-1   hashicorp/http-echo:1.0.0   echo      5678/tcp
+week1-bonus-live-web-1    week1-bonus-live-web        web       0.0.0.0:8090->80/tcp
+
++ curl -s http://localhost:8090/api/
+hello-from-compose-echo
+```
+
+메모:
+
+- `web` 단독 실행도 가능하도록 NGINX upstream 해석을 런타임 DNS 방식으로 조정했다. 그래서 `echo` 없이 `web`만 실행해도 루트 페이지는 정상 기동한다.
+- GitHub SSH는 `~/.ssh/id_ed25519_github` 키를 새로 만들고 GitHub 계정에 등록한 뒤, `origin`을 `git@github.com:NiceTry3675/E1-1.git`로 변경했다.
+- 로컬 SSH 설정은 저장소 밖의 `~/.ssh/config`에 `Host github.com` 블록을 추가해 이 저장소가 GitHub 접속 시 해당 키를 사용하게 했다.
+
+## 20. 보안 및 개인정보 보호
 
 - README와 로그에는 토큰 전체 값을 남기지 않았다.
 - Git 이메일은 마스킹했다.

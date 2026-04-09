@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${APP_TITLE}</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --panel: #fffaf2;
+      --ink: #1f2937;
+      --accent: #b45309;
+      --line: #d6c4a8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: var(--ink);
+      font-family: "Segoe UI", "Noto Sans KR", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(180, 83, 9, 0.16), transparent 30%),
+        linear-gradient(135deg, #f9f3e8 0%, #efe3cf 100%);
+    }
+
+    main {
+      width: min(760px, 100%);
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 18px 48px rgba(15, 23, 42, 0.12);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2rem, 5vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+    }
+
+    p, li {
+      line-height: 1.6;
+      font-size: 1.02rem;
+    }
+
+    .badge {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(180, 83, 9, 0.12);
+      color: var(--accent);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 0.8rem;
+    }
+
+    code {
+      padding: 2px 6px;
+      border-radius: 8px;
+      background: rgba(31, 41, 55, 0.06);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="badge">Compose Bonus</div>
+    <h1>${APP_TITLE}</h1>
+    <p id="app-mode">App mode: <strong>${APP_MODE}</strong></p>
+    <p id="api-base-url">API base URL: <code>${API_BASE_URL}</code></p>
+    <p>이 페이지는 <strong>Docker Compose + 환경 변수 주입</strong> 실습을 위해 렌더링된 정적 페이지입니다.</p>
+    <ul>
+      <li>웹 서비스: <code>web</code></li>
+      <li>보조 서비스: <code>echo</code></li>
+      <li>멀티 컨테이너 통신: <code>web -> echo</code></li>
+    </ul>
+  </main>
+</body>
+</html>

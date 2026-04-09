@@ -1,0 +1,247 @@
++ docker compose -p week1-bonus-basic -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose up -d web --build --no-deps
+#1 [internal] load local bake definitions
+#1 reading from stdin 575B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 319B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/nginx:alpine
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/6] FROM docker.io/library/nginx:alpine
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 175B done
+#6 DONE 0.0s
+
+#7 [5/6] COPY entrypoint.sh /entrypoint.sh
+#7 CACHED
+
+#8 [2/6] RUN apk add --no-cache gettext
+#8 CACHED
+
+#9 [3/6] COPY nginx/default.conf.template /opt/templates/default.conf.template
+#9 CACHED
+
+#10 [4/6] COPY site/index.template.html /opt/templates/index.template.html
+#10 CACHED
+
+#11 [6/6] RUN chmod +x /entrypoint.sh
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers done
+#12 writing image sha256:c80b2b062f5b43a3a3608557761038ed534805b615e9ab9c1aa1705bb174e673 0.0s done
+#12 naming to docker.io/library/week1-bonus-basic-web
+#12 naming to docker.io/library/week1-bonus-basic-web done
+#12 DONE 0.1s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ week1-bonus-basic-web  Built
+ Network week1-bonus-basic_default  Creating
+ Network week1-bonus-basic_default  Created
+ Container week1-bonus-basic-web-1  Creating
+ Container week1-bonus-basic-web-1  Created
+ Container week1-bonus-basic-web-1  Starting
+ Container week1-bonus-basic-web-1  Started
++ docker compose -p week1-bonus-basic -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose ps
+NAME                      IMAGE                   COMMAND            SERVICE   CREATED                  STATUS                  PORTS
+week1-bonus-basic-web-1   week1-bonus-basic-web   "/entrypoint.sh"   web       Less than a second ago   Up Less than a second   0.0.0.0:8090->80/tcp, [::]:8090->80/tcp
++ curl -s http://localhost:8090 | rg 'Codyssey Compose Bonus|App mode|API base URL'
+  <title>Codyssey Compose Bonus</title>
+    <h1>Codyssey Compose Bonus</h1>
+    <p id="app-mode">App mode: <strong>compose-demo</strong></p>
+    <p id="api-base-url">API base URL: <code>/api/</code></p>
++ docker compose -p week1-bonus-basic -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose logs web --tail 20
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: using the "epoll" event method
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: nginx/1.29.8
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: built by gcc 15.2.0 (Alpine 15.2.0) 
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: OS: Linux 6.17.8-orbstack-00308-g8f9c941121b1
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: getrlimit(RLIMIT_NOFILE): 20480:1048576
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: start worker processes
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: start worker process 9
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: start worker process 10
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: start worker process 11
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: start worker process 12
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: start worker process 13
+web-1  | 2026/04/09 07:12:48 [notice] 1#1: start worker process 14
+web-1  | 192.168.97.1 - - [09/Apr/2026:07:12:48 +0000] "GET / HTTP/1.1" 200 2179 "-" "curl/8.7.1" "-"
++ docker compose -p week1-bonus-basic -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose down
+ Container week1-bonus-basic-web-1  Stopping
+ Container week1-bonus-basic-web-1  Stopped
+ Container week1-bonus-basic-web-1  Removing
+ Container week1-bonus-basic-web-1  Removed
+ Network week1-bonus-basic_default  Removing
+ Network week1-bonus-basic_default  Removed
++ docker compose -p week1-bonus-stack -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose up -d --build
+#1 [internal] load local bake definitions
+#1 reading from stdin 575B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 319B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/nginx:alpine
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/6] FROM docker.io/library/nginx:alpine
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 175B done
+#6 DONE 0.0s
+
+#7 [3/6] COPY nginx/default.conf.template /opt/templates/default.conf.template
+#7 CACHED
+
+#8 [4/6] COPY site/index.template.html /opt/templates/index.template.html
+#8 CACHED
+
+#9 [2/6] RUN apk add --no-cache gettext
+#9 CACHED
+
+#10 [5/6] COPY entrypoint.sh /entrypoint.sh
+#10 CACHED
+
+#11 [6/6] RUN chmod +x /entrypoint.sh
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers done
+#12 writing image sha256:40804fb290f098b2a29c79ef84bbfc3fcd41919c26ea061083a0c33b0916fba4 done
+#12 naming to docker.io/library/week1-bonus-stack-web done
+#12 DONE 0.0s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ week1-bonus-stack-web  Built
+ Network week1-bonus-stack_default  Creating
+ Network week1-bonus-stack_default  Created
+ Container week1-bonus-stack-echo-1  Creating
+ Container week1-bonus-stack-echo-1  Created
+ Container week1-bonus-stack-web-1  Creating
+ Container week1-bonus-stack-web-1  Created
+ Container week1-bonus-stack-echo-1  Starting
+ Container week1-bonus-stack-echo-1  Started
+ Container week1-bonus-stack-web-1  Starting
+ Container week1-bonus-stack-web-1  Started
++ docker compose -p week1-bonus-stack -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose ps
+NAME                       IMAGE                       COMMAND                  SERVICE   CREATED        STATUS                  PORTS
+week1-bonus-stack-echo-1   hashicorp/http-echo:1.0.0   "/http-echo -listen=…"   echo      1 second ago   Up Less than a second   5678/tcp
+week1-bonus-stack-web-1    week1-bonus-stack-web       "/entrypoint.sh"         web       1 second ago   Up Less than a second   0.0.0.0:8090->80/tcp, [::]:8090->80/tcp
++ curl -s http://localhost:8090 | rg 'Codyssey Compose Bonus|App mode|API base URL'
+  <title>Codyssey Compose Bonus</title>
+    <h1>Codyssey Compose Bonus</h1>
+    <p id="app-mode">App mode: <strong>compose-demo</strong></p>
+    <p id="api-base-url">API base URL: <code>/api/</code></p>
++ curl -s http://localhost:8090/api/
+hello-from-compose-echo
++ docker compose -p week1-bonus-stack -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose exec -T web wget -qO- http://echo:5678/
+hello-from-compose-echo
++ docker compose -p week1-bonus-stack -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose logs echo --tail 20
+echo-1  | 2026/04/09 07:12:50 [INFO] server is listening on :5678
+echo-1  | 2026/04/09 07:12:51 localhost 192.168.97.3:34510 "GET / HTTP/1.1" 200 24 "curl/8.7.1" 17.829µs
+echo-1  | 2026/04/09 07:12:51 echo:5678 192.168.97.3:34516 "GET / HTTP/1.1" 200 24 "Wget" 4.32µs
++ docker compose -p week1-bonus-stack -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose down
+ Container week1-bonus-stack-web-1  Stopping
+ Container week1-bonus-stack-web-1  Stopped
+ Container week1-bonus-stack-web-1  Removing
+ Container week1-bonus-stack-web-1  Removed
+ Container week1-bonus-stack-echo-1  Stopping
+ Container week1-bonus-stack-echo-1  Stopped
+ Container week1-bonus-stack-echo-1  Removing
+ Container week1-bonus-stack-echo-1  Removed
+ Network week1-bonus-stack_default  Removing
+ Network week1-bonus-stack_default  Removed
++ docker compose -p week1-bonus-env -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose.override up -d --build
+#1 [internal] load local bake definitions
+#1 reading from stdin 571B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 319B done
+#2 DONE 0.1s
+
+#3 [internal] load metadata for docker.io/library/nginx:alpine
+#3 DONE 0.0s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 2B done
+#4 DONE 0.1s
+
+#5 [1/6] FROM docker.io/library/nginx:alpine
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 175B done
+#6 DONE 0.1s
+
+#7 [3/6] COPY nginx/default.conf.template /opt/templates/default.conf.template
+#7 CACHED
+
+#8 [4/6] COPY site/index.template.html /opt/templates/index.template.html
+#8 CACHED
+
+#9 [2/6] RUN apk add --no-cache gettext
+#9 CACHED
+
+#10 [5/6] COPY entrypoint.sh /entrypoint.sh
+#10 CACHED
+
+#11 [6/6] RUN chmod +x /entrypoint.sh
+#11 CACHED
+
+#12 exporting to image
+#12 exporting layers done
+#12 writing image sha256:e35c2b0ad5c1a0457c356fc19d04b953ae795cf896652c6768347f9aa17fe468 done
+#12 naming to docker.io/library/week1-bonus-env-web
+#12 naming to docker.io/library/week1-bonus-env-web 0.0s done
+#12 DONE 0.0s
+
+#13 resolving provenance for metadata file
+#13 DONE 0.0s
+ week1-bonus-env-web  Built
+ Network week1-bonus-env_default  Creating
+ Network week1-bonus-env_default  Created
+ Container week1-bonus-env-echo-1  Creating
+ Container week1-bonus-env-echo-1  Created
+ Container week1-bonus-env-web-1  Creating
+ Container week1-bonus-env-web-1  Created
+ Container week1-bonus-env-echo-1  Starting
+ Container week1-bonus-env-echo-1  Started
+ Container week1-bonus-env-web-1  Starting
+ Container week1-bonus-env-web-1  Started
++ docker compose -p week1-bonus-env -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose.override ps
+NAME                     IMAGE                       COMMAND                  SERVICE   CREATED                  STATUS                  PORTS
+week1-bonus-env-echo-1   hashicorp/http-echo:1.0.0   "/http-echo -listen=…"   echo      1 second ago             Up Less than a second   5678/tcp
+week1-bonus-env-web-1    week1-bonus-env-web         "/entrypoint.sh"         web       Less than a second ago   Up Less than a second   0.0.0.0:8092->80/tcp, [::]:8092->80/tcp
++ curl -s http://localhost:8092 | rg 'Codyssey Compose Env Override|App mode'
+  <title>Codyssey Compose Env Override</title>
+    <h1>Codyssey Compose Env Override</h1>
+    <p id="app-mode">App mode: <strong>compose-env</strong></p>
++ curl -s http://localhost:8092/api/
+compose-env-reply
++ docker compose -p week1-bonus-env -f bonus/compose-stack/compose.yaml --env-file bonus/compose-stack/.env.compose.override down
+ Container week1-bonus-env-web-1  Stopping
+ Container week1-bonus-env-web-1  Stopped
+ Container week1-bonus-env-web-1  Removing
+ Container week1-bonus-env-web-1  Removed
+ Container week1-bonus-env-echo-1  Stopping
+ Container week1-bonus-env-echo-1  Stopped
+ Container week1-bonus-env-echo-1  Removing
+ Container week1-bonus-env-echo-1  Removed
+ Network week1-bonus-env_default  Removing
+ Network week1-bonus-env_default  Removed
