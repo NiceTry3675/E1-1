@@ -1,0 +1,106 @@
++ docker --version
+Docker version 28.5.2, build ecc6942
++ docker info --format "Server Version: {{.ServerVersion}} | Context: {{.ClientInfo.Context}} | Operating System: {{.OperatingSystem}} | OSType: {{.OSType}}"
+Server Version: 28.5.2 | Context: orbstack | Operating System: OrbStack | OSType: linux
++ docker pull hello-world
+Using default tag: latest
+latest: Pulling from library/hello-world
+4f55086f7dd0: Pulling fs layer
+4f55086f7dd0: Verifying Checksum
+4f55086f7dd0: Pull complete
+Digest: sha256:452a468a4bf985040037cb6d5392410206e47db9bf5b7278d281f94d1c2d0931
+Status: Downloaded newer image for hello-world:latest
+docker.io/library/hello-world:latest
++ docker images
+REPOSITORY              TAG               IMAGE ID       CREATED             SIZE
+week1-bonus-stack-web   latest            40804fb290f0   51 minutes ago      66.4MB
+week1-bonus-basic-web   latest            c80b2b062f5b   51 minutes ago      66.4MB
+week1-bonus-env-web     latest            e35c2b0ad5c1   51 minutes ago      66.4MB
+week1-bonus-live-web    latest            ccf83754fc82   51 minutes ago      66.4MB
+<none>                  <none>            ab34f190c41e   53 minutes ago      66.4MB
+<none>                  <none>            02ddc3b021a3   53 minutes ago      66.4MB
+<none>                  <none>            adfaeae97f49   53 minutes ago      66.4MB
+workstation-nginx       mac-orbstack      00ecc6976a81   About an hour ago   62.2MB
+workstation-nginx       orbstack-review   00ecc6976a81   About an hour ago   62.2MB
+nginx                   alpine            5bd7bd52e5bc   38 hours ago        62.2MB
+ubuntu                  latest            b28307c40a80   5 days ago          78.1MB
+hello-world             latest            e2ac70e7319a   2 weeks ago         10.1kB
+hashicorp/http-echo     1.0.0             04fa556e62bd   2 years ago         8.79MB
++ docker rm -f week1-hello-mac ubuntu-stop-demo-mac >/dev/null 2>&1 || true
++ docker run --name week1-hello-mac hello-world
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
++ docker ps
+CONTAINER ID   IMAGE                               COMMAND                  CREATED          STATUS          PORTS                                     NAMES
+ffd39a4a13d0   ubuntu                              "bash"                   5 seconds ago    Up 4 seconds                                              ubuntu-observe-mac
+b1505530f144   week1-bonus-live-web                "/entrypoint.sh"         50 minutes ago   Up 50 minutes   0.0.0.0:8090->80/tcp, [::]:8090->80/tcp   week1-bonus-live-web-1
+3c7d713b4cf3   hashicorp/http-echo:1.0.0           "/http-echo -listen=…"   50 minutes ago   Up 50 minutes   5678/tcp                                  week1-bonus-live-echo-1
+07730309d4da   ubuntu                              "sleep infinity"         58 minutes ago   Up 58 minutes                                             vol-test-orbstack-2
+6e96e43eb84b   nginx:alpine                        "/docker-entrypoint.…"   58 minutes ago   Up 58 minutes   0.0.0.0:8083->80/tcp, [::]:8083->80/tcp   orbstack-bind
+106afa0df9ed   ubuntu                              "bash"                   58 minutes ago   Up 58 minutes                                             ubuntu-lab-orbstack
+8942cc55ce9f   workstation-nginx:orbstack-review   "/docker-entrypoint.…"   58 minutes ago   Up 58 minutes   0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   orbstack-web-8081
+a203d6fc6ea1   workstation-nginx:orbstack-review   "/docker-entrypoint.…"   58 minutes ago   Up 58 minutes   0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   orbstack-web-8080
++ docker ps -a
+CONTAINER ID   IMAGE                               COMMAND                  CREATED          STATUS                              PORTS                                     NAMES
+5895a5ac4572   hello-world                         "/hello"                 1 second ago     Exited (0) Less than a second ago                                             week1-hello-mac
+ffd39a4a13d0   ubuntu                              "bash"                   5 seconds ago    Up 4 seconds                                                                  ubuntu-observe-mac
+b1505530f144   week1-bonus-live-web                "/entrypoint.sh"         50 minutes ago   Up 50 minutes                       0.0.0.0:8090->80/tcp, [::]:8090->80/tcp   week1-bonus-live-web-1
+3c7d713b4cf3   hashicorp/http-echo:1.0.0           "/http-echo -listen=…"   50 minutes ago   Up 50 minutes                       5678/tcp                                  week1-bonus-live-echo-1
+07730309d4da   ubuntu                              "sleep infinity"         58 minutes ago   Up 58 minutes                                                                 vol-test-orbstack-2
+6e96e43eb84b   nginx:alpine                        "/docker-entrypoint.…"   58 minutes ago   Up 58 minutes                       0.0.0.0:8083->80/tcp, [::]:8083->80/tcp   orbstack-bind
+106afa0df9ed   ubuntu                              "bash"                   58 minutes ago   Up 58 minutes                                                                 ubuntu-lab-orbstack
+8942cc55ce9f   workstation-nginx:orbstack-review   "/docker-entrypoint.…"   58 minutes ago   Up 58 minutes                       0.0.0.0:8081->80/tcp, [::]:8081->80/tcp   orbstack-web-8081
+a203d6fc6ea1   workstation-nginx:orbstack-review   "/docker-entrypoint.…"   58 minutes ago   Up 58 minutes                       0.0.0.0:8080->80/tcp, [::]:8080->80/tcp   orbstack-web-8080
++ docker logs week1-hello-mac
+
+Hello from Docker!
+This message shows that your installation appears to be working correctly.
+
+To generate this message, Docker took the following steps:
+ 1. The Docker client contacted the Docker daemon.
+ 2. The Docker daemon pulled the "hello-world" image from the Docker Hub.
+    (amd64)
+ 3. The Docker daemon created a new container from that image which runs the
+    executable that produces the output you are currently reading.
+ 4. The Docker daemon streamed that output to the Docker client, which sent it
+    to your terminal.
+
+To try something more ambitious, you can run an Ubuntu container with:
+ $ docker run -it ubuntu bash
+
+Share images, automate workflows, and more with a free Docker ID:
+ https://hub.docker.com/
+
+For more examples and ideas, visit:
+ https://docs.docker.com/get-started/
+
++ docker run -d --name ubuntu-stop-demo-mac ubuntu sleep infinity
+696440349a40e14e88f7ed9e466ea5c04f7bed0a987293dfc0a1ddc3fdb38ec4
++ docker stats --no-stream ubuntu-stop-demo-mac
+CONTAINER ID   NAME                   CPU %     MEM USAGE / LIMIT   MEM %     NET I/O      BLOCK I/O     PIDS
+696440349a40   ubuntu-stop-demo-mac   0.00%     704KiB / 15.67GiB   0.00%     568B / 84B   53.2kB / 0B   1
++ docker stop ubuntu-stop-demo-mac
+ubuntu-stop-demo-mac
++ docker ps -a --filter name=ubuntu-stop-demo-mac
+CONTAINER ID   IMAGE     COMMAND            CREATED          STATUS                                PORTS     NAMES
+696440349a40   ubuntu    "sleep infinity"   12 seconds ago   Exited (137) Less than a second ago             ubuntu-stop-demo-mac

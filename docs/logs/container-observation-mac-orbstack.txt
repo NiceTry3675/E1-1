@@ -1,0 +1,21 @@
++ docker rm -f ubuntu-observe-mac >/dev/null 2>&1 || true
++ docker run -d --name ubuntu-observe-mac ubuntu sleep infinity
+e869c4c6c3f0dfaa3aab2d10c4bdcb25a260781517882072833030b4a3c619cd
++ echo "attach observation uses a sleep main process so EOF does not stop the container"
+attach observation uses a sleep main process so EOF does not stop the container
++ perl -e 'alarm shift; exec @ARGV' 2 script -q /tmp/attach-observation-mac.log docker attach ubuntu-observe-mac
+^D+ echo "--- attach session transcript ---"
+--- attach session transcript ---
++ sed -n 1,20p /tmp/attach-observation-mac.log
++ echo "--- container state after attach session ended ---"
+--- container state after attach session ended ---
++ docker ps --filter name=ubuntu-observe-mac
+CONTAINER ID   IMAGE     COMMAND            CREATED         STATUS         PORTS     NAMES
+e869c4c6c3f0   ubuntu    "sleep infinity"   3 seconds ago   Up 2 seconds             ubuntu-observe-mac
++ docker exec ubuntu-observe-mac bash -lc 'echo exec-shell-exit-demo-mac'
+exec-shell-exit-demo-mac
++ echo "--- container state after exec ended ---"
+--- container state after exec ended ---
++ docker ps --filter name=ubuntu-observe-mac
+CONTAINER ID   IMAGE     COMMAND            CREATED         STATUS         PORTS     NAMES
+e869c4c6c3f0   ubuntu    "sleep infinity"   3 seconds ago   Up 2 seconds             ubuntu-observe-mac

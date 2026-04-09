@@ -1,28 +1,20 @@
 + git --version
 git version 2.53.0
-+ git config --global --get user.name
-+ git config --global --get user.email
-+ git config --global --get init.defaultbranch
-+ git config --list | sed -n "1,40p"
-credential.helper=osxkeychain
-core.repositoryformatversion=0
-core.filemode=true
-core.bare=false
-core.logallrefupdates=true
-core.ignorecase=true
-core.precomposeunicode=true
-remote.origin.url=https://github.com/NiceTry3675/E1-1.git
-remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
-branch.main.remote=origin
-branch.main.merge=refs/heads/main
-branch.main.vscode-merge-base=origin/main
-+ gh --version
-gh version 2.89.0 (2026-03-26)
-https://github.com/cli/cli/releases/tag/v2.89.0
++ git config user.name
+NiceTry3675
++ git config user.email
+tomtom35177@hs.ac.kr
++ git branch --show-current
+main
++ git remote -v
+origin	git@github.com:NiceTry3675/E1-1.git (fetch)
+origin	git@github.com:NiceTry3675/E1-1.git (push)
 + gh auth status
 github.com
   ✓ Logged in to github.com account NiceTry3675 (keyring)
   - Active account: true
   - Git operations protocol: https
   - Token: gho_************************************
-  - Token scopes: 'gist', 'read:org', 'repo', 'workflow'
+  - Token scopes: 'admin:public_key', 'gist', 'read:org', 'repo', 'workflow'
++ ssh -T git@github.com
+Hi NiceTry3675! You've successfully authenticated, but GitHub does not provide shell access.

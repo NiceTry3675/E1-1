@@ -42,6 +42,9 @@ git version 2.43.0
 현재 환경 로그:
 
 - [environment-mac-orbstack.txt](docs/logs/environment-mac-orbstack.txt)
+- [cli-session-mac-orbstack.txt](docs/logs/cli-session-mac-orbstack.txt)
+- [docker-basics-mac-orbstack.txt](docs/logs/docker-basics-mac-orbstack.txt)
+- [container-observation-mac-orbstack.txt](docs/logs/container-observation-mac-orbstack.txt)
 - [docker-orbstack-practice.txt](docs/logs/docker-orbstack-practice.txt)
 - [volume-mac-orbstack.txt](docs/logs/volume-mac-orbstack.txt)
 - [git-config-mac-orbstack.txt](docs/logs/git-config-mac-orbstack.txt)
@@ -74,6 +77,9 @@ git version 2.43.0
 - GitHub 인증 상태: [github-auth.txt](docs/logs/github-auth.txt)
 - GitHub 원격 생성 / push: [github-remote.txt](docs/logs/github-remote.txt)
 - 현재 mac 환경 정보: [environment-mac-orbstack.txt](docs/logs/environment-mac-orbstack.txt)
+- 현재 mac CLI / 권한 로그: [cli-session-mac-orbstack.txt](docs/logs/cli-session-mac-orbstack.txt)
+- 현재 mac Docker 기본 운영 로그: [docker-basics-mac-orbstack.txt](docs/logs/docker-basics-mac-orbstack.txt)
+- 현재 mac `attach` / `exec` 관찰: [container-observation-mac-orbstack.txt](docs/logs/container-observation-mac-orbstack.txt)
 - 현재 mac Docker 복습 로그: [docker-orbstack-practice.txt](docs/logs/docker-orbstack-practice.txt)
 - 현재 mac 볼륨 복습 로그: [volume-mac-orbstack.txt](docs/logs/volume-mac-orbstack.txt)
 - 현재 mac Git/GitHub 상태: [git-config-mac-orbstack.txt](docs/logs/git-config-mac-orbstack.txt)
@@ -119,6 +125,21 @@ docker --version
 docker info
 docker context ls
 
+cd /Users/tomtom351778618/Documents/E1-1/practice/cli-lab
+pwd
+ls -la
+touch mac-empty.txt
+printf 'hello mac cli\n' > mac-notes.txt
+cat mac-notes.txt
+cp mac-notes.txt mac-notes-copy.txt
+mv mac-notes-copy.txt mac-renamed.txt
+mv mac-renamed.txt mac-lab/move-me/mac-renamed.txt
+rm -f mac-empty.txt
+mkdir -p mac-perm-dir
+touch mac-perm-file.txt
+chmod 600 mac-perm-file.txt
+chmod 700 mac-perm-dir
+
 docker build -t workstation-nginx:1.0 .
 docker run -d --name web-8080 -p 8080:80 workstation-nginx:1.0
 docker run -d --name web-8081 -p 8081:80 workstation-nginx:1.0
@@ -139,6 +160,14 @@ docker rm -f vol-test
 docker run -d --name vol-test2 -v week1-data:/data ubuntu sleep infinity
 docker exec vol-test2 bash -lc 'cat /data/hello.txt'
 ```
+
+mac에서 다시 남긴 로그:
+
+- [cli-session-mac-orbstack.txt](docs/logs/cli-session-mac-orbstack.txt)
+- [docker-basics-mac-orbstack.txt](docs/logs/docker-basics-mac-orbstack.txt)
+- [container-observation-mac-orbstack.txt](docs/logs/container-observation-mac-orbstack.txt)
+- [docker-orbstack-practice.txt](docs/logs/docker-orbstack-practice.txt)
+- [volume-mac-orbstack.txt](docs/logs/volume-mac-orbstack.txt)
 
 ## 7. 터미널 조작 로그
 

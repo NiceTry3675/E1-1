@@ -1,0 +1,33 @@
++ pwd
+/Users/tomtom351778618/Documents/E1-1/practice/cli-lab
++ ls -la
+total 8
+drwxr-xr-x  6 tomtom351778618  tomtom351778618  192 Apr  9 17:04 .
+drwxr-xr-x  4 tomtom351778618  tomtom351778618  128 Apr  9 15:34 ..
+drwxr-xr-x  3 tomtom351778618  tomtom351778618   96 Apr  9 17:04 mac-lab
+drwxr-xr-x  3 tomtom351778618  tomtom351778618   96 Apr  9 15:34 move-me
+-rw-r--r--  1 tomtom351778618  tomtom351778618   10 Apr  9 15:34 notes.txt
+-rw-r--r--  1 tomtom351778618  tomtom351778618    0 Apr  9 15:34 perm-file.txt
++ touch mac-empty.txt
++ printf "hello mac cli\n" > mac-notes.txt
++ cat mac-notes.txt
+hello mac cli
++ cp mac-notes.txt mac-notes-copy.txt
++ mv mac-notes-copy.txt mac-renamed.txt
++ mv mac-renamed.txt mac-lab/move-me/mac-renamed.txt
++ rm -f mac-empty.txt
++ mkdir -p mac-perm-dir
++ touch mac-perm-file.txt
++ ls -ld mac-perm-file.txt mac-perm-dir
+drwxr-xr-x  2 tomtom351778618  tomtom351778618  64 Apr  9 17:04 mac-perm-dir
+-rw-r--r--  1 tomtom351778618  tomtom351778618   0 Apr  9 17:04 mac-perm-file.txt
++ chmod 600 mac-perm-file.txt
++ chmod 700 mac-perm-dir
++ ls -ld mac-perm-file.txt mac-perm-dir
+drwx------  2 tomtom351778618  tomtom351778618  64 Apr  9 17:04 mac-perm-dir
+-rw-------  1 tomtom351778618  tomtom351778618   0 Apr  9 17:04 mac-perm-file.txt
++ chmod 644 mac-perm-file.txt
++ chmod 755 mac-perm-dir
++ ls -ld mac-perm-file.txt mac-perm-dir
+drwxr-xr-x  2 tomtom351778618  tomtom351778618  64 Apr  9 17:04 mac-perm-dir
+-rw-r--r--  1 tomtom351778618  tomtom351778618   0 Apr  9 17:04 mac-perm-file.txt
